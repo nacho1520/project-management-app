@@ -27,17 +27,31 @@ const  App = () => {
     });
   };
 
+  const handleSaveProject = (project) => {
+    setOverallState(prevState => {
+      const newProject = {
+        ...project,
+        id: Math.random(),
+      };
+
+      return {
+        selectedProject: undefined,
+        projects: [...prevState.projects, newProject],
+      };
+    });
+  };
+
   let content; 
 
   if(overallState.selectedProject === undefined) {
     content = <HomeMessage handleCreate={ handleCreate }/>;
   } else if(overallState.selectedProject === null) {
-    content = <NewProject handleCancel={ handleCancelCreate }/>;
+    content = <NewProject handleCancel={ handleCancelCreate } handleSave={ handleSaveProject }/>;
   }
 
   return (
     <main className="h-screen my-8 flex gap-8">
-      <Sidebar handleCreate={ handleCreate } />
+      <Sidebar handleCreate={ handleCreate } projects={ overallState.projects } />
       { content }
     </main>
   )
