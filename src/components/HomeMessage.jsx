@@ -1,7 +1,7 @@
 import noProjectImg from '../assets/no-projects.png';
 import Button from './Button';
 
-const HomeMessage = () => {
+const HomeMessage = ({ onClickButton }) => {
     return(
         <div className="mt-24 text-center w-2/3">
             <img 
@@ -10,7 +10,7 @@ const HomeMessage = () => {
             />
             <h2 className='text-stone-500 text-xl font-bold my-4 '>No Project Selected</h2>
             <p className='text-stone-400 mb-4'>Select a project or get started with a new one</p>
-            <Button>Create new project</Button>
+            <Button onClick={ onClickButton }>Create new project</Button>
         </div>
     );
 };
