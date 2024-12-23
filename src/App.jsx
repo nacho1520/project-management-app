@@ -4,18 +4,32 @@ import HomeMessage from "./components/HomeMessage";
 import NewProject from "./components/NewProject";
 
 const  App = () => {
-  const [ create, setCreate ] = useState(false);
+  const [ overallState, setOverallState ] = useState({
+    projects: [],
+    selectedProject: undefined,
+  });
 
   const handleCreate = () => {
-    setCreate(true);
+    setOverallState(prevState => {
+      return {
+        ...prevState,
+        selectedProject: null,
+      };
+    });
   };
+
+  let content; 
+
+  if(overallState.selectedProject === undefined) {
+    content = <HomeMessage handleCreate={ handleCreate }/>;
+  } else if(overallState.selectedProject === null) {
+    content = <NewProject />;
+  }
 
   return (
     <main className="h-screen my-8 flex gap-8">
-      <Sidebar onClickButton={ handleCreate } />
-      {
-        !create ? <HomeMessage onClickButton={ handleCreate }/> : <NewProject /> 
-      }
+      <Sidebar handleCreate={ handleCreate } />
+      { content }
     </main>
   )
 };
