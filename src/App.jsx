@@ -18,12 +18,21 @@ const  App = () => {
     });
   };
 
+  const handleCancelCreate = () => {
+    setOverallState(prevState => {
+      return {
+        ...prevState,
+        selectedProject: undefined,
+      };
+    });
+  };
+
   let content; 
 
   if(overallState.selectedProject === undefined) {
     content = <HomeMessage handleCreate={ handleCreate }/>;
   } else if(overallState.selectedProject === null) {
-    content = <NewProject />;
+    content = <NewProject handleCancel={ handleCancelCreate }/>;
   }
 
   return (
