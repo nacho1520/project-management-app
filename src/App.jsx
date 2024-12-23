@@ -2,6 +2,7 @@ import { useState } from "react";
 import Sidebar from "./components/Sidebar";
 import HomeMessage from "./components/HomeMessage";
 import NewProject from "./components/NewProject";
+import ProjectDetails from "./components/ProjectDetails";
 
 const  App = () => {
   const [ overallState, setOverallState ] = useState({
@@ -29,14 +30,24 @@ const  App = () => {
 
   const handleSaveProject = (project) => {
     setOverallState(prevState => {
+      const newId = Math.random();
       const newProject = {
         ...project,
-        id: Math.random(),
+        id: newId,
       };
 
       return {
-        selectedProject: undefined,
+        selectedProject: newId,
         projects: [...prevState.projects, newProject],
+      };
+    });
+  };
+
+  const handleSelectProject = (id) => {
+    setOverallState(prevState => {
+      return {
+        ...prevState,
+        selectedProject: id,
       };
     });
   };
@@ -47,11 +58,13 @@ const  App = () => {
     content = <HomeMessage handleCreate={ handleCreate }/>;
   } else if(overallState.selectedProject === null) {
     content = <NewProject handleCancel={ handleCancelCreate } handleSave={ handleSaveProject }/>;
+  } else {
+    content = <ProjectDetails project={ overallState.projects.find(project => project.id === overallState.selectedProject) } />
   }
 
   return (
     <main className="h-screen my-8 flex gap-8">
-      <Sidebar handleCreate={ handleCreate } projects={ overallState.projects } />
+      <Sidebar handleCreate={ handleCreate } projects={ overallState.projects } handleSelect={ handleSelectProject } />
       { content }
     </main>
   )
