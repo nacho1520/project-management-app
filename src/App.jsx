@@ -59,12 +59,18 @@ const  App = () => {
   } else if(overallState.selectedProject === null) {
     content = <NewProject handleCancel={ handleCancelCreate } handleSave={ handleSaveProject }/>;
   } else {
-    content = <ProjectDetails project={ overallState.projects.find(project => project.id === overallState.selectedProject) } />
+    const selectedProject = overallState.projects.find(project => project.id === overallState.selectedProject);
+    content = <ProjectDetails project={ selectedProject } />
   }
 
   return (
     <main className="h-screen my-8 flex gap-8">
-      <Sidebar handleCreate={ handleCreate } projects={ overallState.projects } handleSelect={ handleSelectProject } />
+      <Sidebar 
+        handleCreate={ handleCreate } 
+        projects={ overallState.projects } 
+        handleSelect={ handleSelectProject }
+        selectedProjectId={ overallState.selectedProject } 
+      />
       { content }
     </main>
   )
