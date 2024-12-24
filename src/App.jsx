@@ -52,6 +52,16 @@ const  App = () => {
     });
   };
 
+  const handleDeleteProject = () => {
+    setOverallState(prevState => {
+      return {
+        ...prevState,
+        selectedProject: undefined,
+        projects: prevState.projects.filter(project => project.id !== prevState.selectedProject),
+      };
+    });
+  };
+
   let content; 
 
   if(overallState.selectedProject === undefined) {
@@ -60,7 +70,7 @@ const  App = () => {
     content = <NewProject handleCancel={ handleCancelCreate } handleSave={ handleSaveProject }/>;
   } else {
     const selectedProject = overallState.projects.find(project => project.id === overallState.selectedProject);
-    content = <ProjectDetails project={ selectedProject } />
+    content = <ProjectDetails project={ selectedProject } handleDelete={ handleDeleteProject } />
   }
 
   return (
