@@ -1,7 +1,11 @@
+import { useContext } from "react";
+
+import { ProjectsContext } from "../store/projects-context";
 import { useState, useRef } from "react";
 import Modal from "./Modal";
 
-const NewTask = ({ onAddTask }) => {
+const NewTask = () => {
+    const { addTask } = useContext(ProjectsContext);
     const [ enteredTask, setEnteredTask ] = useState('');
     const modal = useRef();
 
@@ -14,7 +18,7 @@ const NewTask = ({ onAddTask }) => {
             modal.current.open();
             return;
         }
-        onAddTask(enteredTask);
+        addTask(enteredTask);
         setEnteredTask('');
     };
 
